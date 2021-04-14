@@ -20,43 +20,47 @@ v::$validators['captcha'] = function($value, $namespace = 'captcha') {
   return $securimage->check($value);
 };
 
-// Register route for captcha image generation
-kirby()->routes(array(
-  array(
-    'pattern' => 'captcha',
-    'action' => function() {
-      $img = new Securimage();
-      $img->case_sensitive = c::get('captcha.case_sensitive', true);
-      $img->perturbation   = c::get('captcha.perturbation', .75);
-      $img->num_lines      = c::get('captcha.num_lines', 8);
-      $img->charset        = c::get('captcha.charset', 'ABCDEFGHJKMNPQRSTVWXYZ');
+Kirby::plugin('freiraum-co/kirby-plugin-captcha', [
 
-      if (c::get('captcha.ttf_file')) {
-        $img->ttf_file = c::get('captcha.ttf_file');
-      }
-      if (c::get('captcha.height')) {
-        $img->image_height = c::get('captcha.height');
-      }
-      if (c::get('captcha.width')) {
-        $img->image_width = c::get('captcha.width');
-      }
-      if (c::get('captcha.bg_color')) {
-        $img->image_bg_color = new Securimage_Color(c::get('captcha.bg_color'));
-      }
-      if (c::get('captcha.text_color')) {
-        $img->text_color = new Securimage_Color(c::get('captcha.text_color'));
-      }
-      if (c::get('captcha.line_color')) {
-        $img->line_color = new Securimage_Color(c::get('captcha.line_color'));
-      }
+    'routes' => function($kirby) {
+        return [
+            [
+                'pattern' => 'captcha',
+                'action' => function() {
+                    $img = new Securimage();
+                    $img->case_sensitive = c::get('captcha.case_sensitive', true);
+                    $img->perturbation   = c::get('captcha.perturbation', .75);
+                    $img->num_lines      = c::get('captcha.num_lines', 8);
+                    $img->charset        = c::get('captcha.charset', 'ABCDEFGHJKMNPQRSTVWXYZ');
 
-      if (get('namespace')) {
-        $img->setNamespace(get('namespace'));
-      }
+                    if (c::get('captcha.ttf_file')) {
+                        $img->ttf_file = c::get('captcha.ttf_file');
+                    }
+                    if (c::get('captcha.height')) {
+                        $img->image_height = c::get('captcha.height');
+                    }
+                    if (c::get('captcha.width')) {
+                        $img->image_width = c::get('captcha.width');
+                    }
+                    if (c::get('captcha.bg_color')) {
+                        $img->image_bg_color = new Securimage_Color(c::get('captcha.bg_color'));
+                    }
+                    if (c::get('captcha.text_color')) {
+                        $img->text_color = new Securimage_Color(c::get('captcha.text_color'));
+                    }
+                    if (c::get('captcha.line_color')) {
+                        $img->line_color = new Securimage_Color(c::get('captcha.line_color'));
+                    }
 
-      $img->show();
+                    if (get('namespace')) {
+                        $img->setNamespace(get('namespace'));
+                    }
 
-      return false;
+                    $img->show();
+
+                    return false;
+                }
+            ]
+        ];
     }
-  )
-));
+]);
