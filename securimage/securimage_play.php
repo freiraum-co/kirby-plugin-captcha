@@ -27,9 +27,9 @@
  * @link http://www.phpcaptcha.org Securimage PHP CAPTCHA
  * @link http://www.phpcaptcha.org/latest.zip Download Latest Version
  * @link http://www.phpcaptcha.org/Securimage_Docs/ Online Documentation
- * @copyright 2018 Drew Phillips
+ * @copyright 2012 Drew Phillips
  * @author Drew Phillips <drew@drew-phillips.com>
- * @version 3.6.8 (May 2020)
+ * @version 3.5.2 (Feb 15, 2014)
  * @package Securimage
  *
  */
@@ -52,7 +52,6 @@ $img = new Securimage();
 //$img->audio_use_noise = true;
 //$img->degrade_audio   = false;
 //$img->sox_binary_path = 'sox';
-//Securimage::$lame_binary_path = '/usr/bin/lame'; // for mp3 audio support
 
 // To use an alternate language, uncomment the following and download the files from phpcaptcha.org
 // $img->audio_path = $img->securimage_path . '/audio/es/';
@@ -63,8 +62,4 @@ $img = new Securimage();
 // set namespace if supplied to script via HTTP GET
 if (!empty($_GET['namespace'])) $img->setNamespace($_GET['namespace']);
 
-
-// mp3 or wav format
-$format = (isset($_GET['format']) && strtolower($_GET['format']) == 'mp3') ? 'mp3' : null;
-
-$img->outputAudioFile($format);
+$img->outputAudioFile();
